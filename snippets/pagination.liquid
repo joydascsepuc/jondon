@@ -7,7 +7,7 @@
       {% if part.is_link %}
         <a href="{{ part.url }}" class="btn btn-success m-2">{{ part.title }}</a>
       {% else %}
-        <span class="btn btn-success m-2">{{ part.title }}</span>
+        <span class="btn btn-secondary m-2">{{ part.title }}</span>
       {% endif %}
     {% endfor %}
     {% if pagination.next %}
