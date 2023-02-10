@@ -1,0 +1,124 @@
+<div class="container">
+  {% if cart.item_count > 0 %}
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Your cart</h2>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="{{ routes.all_products_collection_url }}">Explore more</a>
+      </div>
+    </div>
+    <form
+      action="{{ routes.cart_url }}"
+      method="post"
+      novalidate>
+      <table class="table table-responsive text-center">
+        <thead class="table-head text-center">
+          <th colspan="2">Product</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>total</th>
+        </thead>
+        <tbody class="table-body text-center">
+          {% for item in cart.items %}
+            <tr>
+              <td>
+                <a href="{{ item.url | within: collections.all }}">
+                  <img src="{{ item | img_url: 'small' }}" alt="{{ item.title | escape }}">
+                </a>
+              </td>
+              <td>
+                <div class="d-inline-flex">
+                  <a class="m-2" href="{{ item.url }}">{{ item.product.title }}</a>
+                  <div class="m-2">{{ item.variant.title }}</div>
+                  <a class="m-2" href="{{ item.url_to_remove }}">
+                    remove
+                  </a>
+                </div>
+              </td>
+              <td>{{ item.price | money }}</td>
+              <td>
+                <input
+                  type="number"
+                  name="updates[]"
+                  id="updates_{{ item.key }}"
+                  value="{{ item.quantity }}"
+                  min="0">
+              </td>
+              <td>
+                {% if item.original_line_price != item.line_price %}
+                  {{ item.original_line_price | money }}
+                {% endif %}
+                {{ item.line_price | money }}
+                {% for discount in item.discounts %}
+                  {{ discount.title }}
+                {% endfor %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-8">
+          <label for="cart_note" class="label">Cart note</label>
+          <textarea
+            class="form-control"
+            name="note"
+            id="cart_note"
+            cols="15"
+            rows="5"></textarea>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when "checkout_button" %}
+              <button
+                type="submit"
+                class="btn btn-outline-success"
+                name="checkout">Checkout
+              </button>
+              {% when "update_quantity_button" %}
+              <button
+                type="submit"
+                class="btn btn-outline-primary"
+                name="update">Update
+              </button>
+              {% when "total_price" %}
+              <h5 class="text-center">sub total : {{ cart.total_price | money }}</h5>
+          {% else %}
+
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+    </form>
+  {% else %}
+    <div class="text-center">
+      <h5>Cart</h5>
+      <p class="fw-bold">Sorry, your cart is empty!</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Explore</a>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Cart page",
+    "blocks": [
+      {
+        "name": "Checkout button",
+        "type": "checkout_button",
+        "limit": 1
+      }, {
+        "name": "Update quantity button",
+        "type": "update_quantity_button",
+        "limit": 1
+      }, {
+        "name": "Total price",
+        "type": "total_price",
+        "limit": 1
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,28 @@
+{
+    "name": "Cart",
+    "sections": {
+        "cart_section": {
+            "type": "section-cart",
+            "blocks": {
+                "total_price": {
+                    "name": "Total price",
+                    "type": "total_price"
+                },
+                "checkout_button": {
+                    "name": "Checkout button",
+                    "type": "checkout_button"
+                },
+                "update_quantity": {
+                    "name": "Update quantity button",
+                    "type": "update_quantity_button"
+                }
+            },
+            "block_order": [
+                "total_price",
+                "update_quantity",
+                "checkout_button"
+            ]
+        }
+    },
+    "order": ["cart_section"]
+}

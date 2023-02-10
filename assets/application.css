@@ -10,3 +10,7 @@ body {
 .logo {
     width: 25%;
 }
+
+.color-gray {
+    color: gray !important;
+}
