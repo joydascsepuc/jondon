@@ -1,0 +1,27 @@
+{
+    "name": "Blog post",
+    "sections": {
+        "blog_post": {
+            "type": "section-article",
+            "blocks": {
+                "article_title": {
+                    "type": "article_title"
+                },
+                "article_image": {
+                    "type": "article_image"
+                },
+                "published_date": {
+                    "type": "published_date"
+                },
+                "article_content": {
+                    "type": "article_content"
+                },
+                "article_author": {
+                    "type": "article_author"
+                }
+            },
+            "block_order": ["article_image", "article_title", "article_author", "published_date", "article_content"]
+        }
+    },
+    "order": ["blog_post"]
+}

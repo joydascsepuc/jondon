@@ -1,0 +1,75 @@
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when "article_title" %}
+    <h2 class="fw-bold">{{ article.title }}</h2>
+    {% when "article_image" %}
+    {% if article.image != blank %}
+      <img
+        class="img-fluid"
+        src="{{ article.image | image_url }}"
+        alt="{{ article.image.alt }}">
+    {% else %}
+      <img
+        src=""
+        class="img-fluid"
+        alt="lifestyle-1">
+    {% endif %}
+    {% when "published_date" %}
+    {% if section.settings.show_published_date %}
+      <p>{{ article.published_at | date: format: 'on_date' }}</p>
+    {% endif %}
+    {% when "article_content" %}
+    <div class="p-2">{{ article.content }}</div>
+    {% when "article_author" %}
+    {% if section.settings.show_author %}
+      <p class="m-0 p-0 fw-bold">{{ article.author }}</p>
+    {% endif %}
+{% else %}
+  {% endcase %}
+{% endfor %}
+
+
+{% schema %}
+  {
+    "name": "Article",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_author",
+        "label": "Show author",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_published_date",
+        "label": "Show published date",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Article title",
+        "type": "article_title",
+        "limit": 1
+      },
+      {
+        "name": "Image",
+        "type": "article_image",
+        "limit": 1
+      },
+      {
+        "name": "Published Date",
+        "type": "published_date",
+        "limit": 1
+      },
+      {
+        "name": "Content",
+        "type": "article_content",
+        "limit": 1
+      }, {
+        "name": "Author",
+        "type": "article_author",
+        "limit": 1
+      }
+    ]
+  }
+{% endschema %}
