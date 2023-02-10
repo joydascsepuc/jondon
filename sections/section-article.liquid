@@ -31,13 +31,16 @@
 
   <!-- If comments are available -->
   {% if article.comments_count > 0 %}
-    {% for comm in article.comments %}
-      <div class="mt-3 p-5">
-        <p class="fw-bold">{{ comm.author }}</p>
-        <p class="mt-2 p-2">{{ comm.content }}</p>
-        <p>{{ comm.created_at }}</p>
-      </div>
-    {% endfor %}
+    {% paginate article.comments by section.settings.comments_per_page %}
+      {% for comm in article.comments %}
+        <div class="mt-3 p-5">
+          <p class="fw-bold">{{ comm.author }}</p>
+          <p class="mt-2 p-2">{{ comm.content }}</p>
+          <p>{{ comm.created_at }}</p>
+        </div>
+      {% endfor %}
+      {% render 'pagination', pagination: paginate %}
+    {% endpaginate %}
   {% endif %}
 
   <!-- if comments are enabled -->
@@ -115,7 +118,13 @@
         "id": "show_published_date",
         "label": "Show published date",
         "default": true
+      }, {
+        "type": "number",
+        "id": "comments_per_page",
+        "label": "Comments per page",
+        "default": 3
       }
+
     ],
     "blocks": [
       {
