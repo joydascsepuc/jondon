@@ -6,10 +6,7 @@
         class="card-img-top"
         alt="{{ product.featured_image.alt | escape }}">
     {% else %}
-      <img
-        src=""
-        class="card-img-top"
-        alt="{{ product-1 }}">
+      {{ 'product-1' | placeholder_svg_tag }}
     {% endif %}
     <div class="card-body">
       <h5 class="card-title">{{ product.title | truncate: 40 }}</h5>

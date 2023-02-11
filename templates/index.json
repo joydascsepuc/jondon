@@ -1,0 +1,9 @@
+{
+    "name": "Home page",
+    "sections": {
+        "featured_collection": {
+            "type": "section-featured-collection"
+        }
+    },
+    "order": ["featured_collection"]
+}
