@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    {% for collection in collections %}
+      {% if collection.all_products_count > 0 %}
+        <div class="col-md-4">
+          <div class="card">
+            {% if collection.image != blank %}
+              <img
+                src="{{ collection.image | img_url: 'medium' }}"
+                class="card-img-top"
+                alt="{{ collection.title }}">
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ collection.title }}</h5>
+              <a href="{{ collection.url }}" class="">Check collection</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection List",
+    "settings": [
+      {
+        "type": "range",
+        "id": "products_per_collection",
+        "min": 4,
+        "max": 12,
+        "step": 4,
+        "label": "Products per collection",
+        "default": 8
+      }
+    ]
+  }
+{% endschema %}
