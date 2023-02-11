@@ -1,0 +1,37 @@
+{% style %}
+  .card {
+    color: black;
+    text-decoration: none;
+  }
+{% endstyle %}
+
+<div class="container">
+  <h1>{{ collection.title }}</h1>
+  {% if collection.all_products_count > 0 %}
+    <div class="row">
+      {% paginate collection.products by section.settings.products_per_page %}
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+        <!-- render pagination -->
+        {% render 'pagination', pagination: paginate %}
+      {% endpaginate %}
+    </div>
+  {% else %}
+    <p class="text-center fw-bold">No products found!</p>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Product collection",
+    "settings": [
+      {
+        "type": "number",
+        "id": "products_per_page",
+        "label": "Products per page",
+        "default": 9
+      }
+    ]
+  }
+{% endschema %}

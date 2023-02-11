@@ -1,0 +1,19 @@
+<div class="col-md-3">
+  <a class="card" href="{{ product.url }}">
+    {% if product.featured_image %}
+      <img
+        src="{{ product.featured_image.src | img_url: 'medium' }}"
+        class="card-img-top"
+        alt="{{ product.featured_image.alt | escape }}">
+    {% else %}
+      <img
+        src=""
+        class="card-img-top"
+        alt="{{ product-1 }}">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ product.title | truncate: 40 }}</h5>
+      <p class="card-text">{{ product.price | money }}</p>
+    </div>
+  </a>
+</div>
