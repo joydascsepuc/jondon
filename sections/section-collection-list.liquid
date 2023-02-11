@@ -6,7 +6,7 @@
           <div class="card">
             {% if collection.image != blank %}
               <img
-                src="{{ collection.image | img_url: 'medium' }}"
+                src="{{ collection.image | image_url: 'medium' }}"
                 class="card-img-top"
                 alt="{{ collection.title }}">
             {% else %}
