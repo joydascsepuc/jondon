@@ -1,0 +1,98 @@
+<div class="container py-5 my-5">
+  {% if section.settings.show_contact_heading %}
+    <h5 class="text-center fw-bold mb-4">{{ section.settings.contact_heading_text }}</h5>
+  {% endif %}
+  {% form 'contact' %}
+    {{ form.errors | default_errors }}
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="First name"
+            name="contact[first_name]"
+            id="first-name" />
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Last name"
+            name="contact[last_name]"
+            id="last-name" />
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <input
+            type="tel"
+            class="form-control"
+            placeholder="Phone"
+            name="contact[phone]"
+            id="phone" />
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="johndon@don.com"
+            name="contact[email]"
+            id="email" />
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <div class="form-group">
+          <textarea
+            name="contact[body]"
+            class="form-control"
+            placeholder="Message"
+            rows="4"
+            cols="12"
+            id="message"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="d-grid">
+          <button class="btn btn-success" type="submit">Submit form</button>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  {% endform %}
+</div>
+
+{% schema %}
+  {
+    "name": "Contact form",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_contact_heading",
+        "label": "Show heading",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "contact_heading_text",
+        "label": "Contact Heading text",
+        "default": "Contact us"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Contact form"
+      }
+    ],
+    "enabled_on": {
+      "templates": ["index", "page"]
+    }
+  }
+{% endschema %}
