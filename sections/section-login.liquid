@@ -63,6 +63,18 @@
             </div>
           {% endform %}
         </div>
+
+        <h5 class="text-center fw-bold">Guest login</h5>
+        <div class="login-div">
+          {% if shop.checkout.guest_login %}
+            {% form 'guest_login' %}
+              <div class="submit d-grid">
+                <button type="submit" class="btn submit-buttons">Continue as guest</button>
+              </div>
+            {% endform %}
+          {% endif %}
+
+        </div>
       </div>
       <div class="col-md-6">
         <div class="forgot-password-div">
