@@ -1,10 +1,49 @@
-{% paginate search.results by 10 %}
-  {% for item in search.results %}
-    {% case item.object_type %}
-      {% when 'product' %}
-      {% render 'search-card', product: item %}
-  {% else %}
-    {% endcase %}
-  {% endfor %}
-  {% render 'pagination', pagination: paginate %}
-{% endpaginate %}
+<div class="container">
+
+  <div class="row text-center mt-2">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">
+      <form action="{{ routes.search_url }}">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search item"
+          name="q"
+          value="{{ search.terms | escape }}">
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-success">Search</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+
+  {% if search.performed %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Vendor</th>
+          <th scope="col">Title</th>
+          <th scope="col">Money</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in search.results %}
+          {% case item.object_type %}
+            {% when 'product' %}
+            {% render 'search-result-table', product: item %}
+        {% else %}
+          {% endcase %}
+        {% else %}
+          <tr>
+            <th colspan="4">
+              <div class="text-center">No items found!</div>
+            </th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>

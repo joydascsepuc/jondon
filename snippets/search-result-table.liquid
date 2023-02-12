@@ -1,5 +1,5 @@
-<div class="d-flex">
-  <div>
+<tr>
+  <th scope="col">
     {% if product.featured_image %}
       <div class="h-100 overflow-hidden">
         <img
@@ -10,17 +10,14 @@
     {% else %}
       {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
     {% endif %}
-  </div>
-
-  <div>
+  </th>
+  <th scope="col">
     <span class="text-sm">{{ product.vendor }}</span>
-  </div>
-
-  <div>
+  </th>
+  <th scope="col">
     <a href="{{ product.url }}" class="">{{ product.title }}</a>
-  </div>
-
-  <div>
+  </th>
+  <th scope="col">
     <p class="">{{ product.price | money }}</p>
-  </div>
-</div>
+  </th>
+</tr>

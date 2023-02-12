@@ -43,12 +43,16 @@
         </ul>
         <!-- CART BUTTON / ACCOUNT LINKS IF ENABLED -->
         <div class="d-flex text-center">
-          <button
-            type="button"
-            class="btn"
-            style="color: gray;">
-            search
-          </button>
+          <form class="d-flex" action="{{ routes.search_url }}">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search item"
+              aria-label="Search"
+              name="q"
+              value="{{ search.terms | escape }}">
+            <button class="btn btn-success" type="submit">Search</button>
+          </form>
           <a
             href="{{ routes.cart_url }}"
             class="btn"
