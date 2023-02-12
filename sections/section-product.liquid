@@ -1,6 +1,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 
+<!-- making varaible -->
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
 <div class="container mt-5 px-5 py-4">
   <div class="row">
     <div class="col-md-6">
@@ -16,8 +19,90 @@
           </ul>
         </div>
       </section>
+
+      <!-- description -->
+      <p class="" style="font-size: 11px; color: gray;">{{ product.description }}</p>
     </div>
-    <div class="col-md-6"><!-- Product variants and others -->
+    <div class="col-md-6">
+      <!-- Product variants and others -->
+      {% form 'product', product %}
+        <input
+        type="hidden"
+          name="id"
+          value="{{ selected_variant.id }}">
+        <!-- form content -->
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'product_vendor' %}
+            <p style="font-size: 10px; color: gray mb-2">{{ product.vendor }}</p>
+            {% when 'product_title' %}
+            <h5 class="fw-bold">{{ product.title }}</h5>
+            {% when 'product_price' %}
+            <span class="text-decoration-line-through pr-2" style="color: gray;">{{ selected_variant.compare_at_price | money }}</span>
+            <span class="fw-bold pr-2">{{ selected_variant.price | money }}</span>
+            {% if selected_variant.price < selected_variant.compare_at_price %}
+              <span class="bg-danger text-white fw-bold" style="padding: 1px 8px; border-radius: 10px;">Sale</span>
+            {% endif %}
+            {% when 'product_variant' %}
+            <!-- variant selection -->
+            {% unless product.has_only_default_variant %}
+              <div
+                data-url="{{ product.url }}"
+                data-section="{{ section.id }}"
+                class="mt-3">
+                {% for option in product.options_with_values %}
+                  <div class="mb-2">
+                    <label for="Option-{{ section.id }}-{{ forloop.index0 }}" class="label">{{ option.name }}</label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      name="options[{{ option.name | escape }}]"
+                      id="Option-{{ section.id }}-{{ forloop.index0 }}">
+                      {% for value in option.values %}
+                        <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>{{ value }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endunless %}
+            {% when 'product_quantity' %}
+            <!-- Quantity -->
+            <label for="{{ section.id }}" class="label mb-1">Quantity</label>
+            <input
+              type="number"
+              class="form-control"
+              id="{{ section.id }}"
+              name="quantity"
+              min="1"
+              value="1">
+            {% when 'product_cart_button' %}
+            <!-- add to cart -->
+            <div class="row mt-4">
+              <div class="col-md-2"></div>
+              <div class="col-md-8 d-grid">
+                <button
+                  type="submit"
+                  name="add"
+                  class="btn btn-success mt-2"
+                  {% if selected_variant.available == false %}
+                  disabled
+                  {% endif %}>
+                  {% if selected_variant.available == false %}
+                    Sold out
+                  {% else %}
+                    Add to cart
+                  {% endif %}
+                </button>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+          {% else %}
+            <p>nothing</p>
+          {% endcase %}
+        {% endfor %}
+
+      {% endform %}
     </div>
   </div>
 </div>
@@ -25,3 +110,39 @@
 <script>
   new Splide('.splide').mount();
 </script>
+
+{% schema %}
+  {
+    "name": "Product template",
+    "blocks": [
+      {
+        "name": "Vendor",
+        "type": "product_vendor",
+        "limit": 1
+      },
+      {
+        "name": "Title",
+        "type": "product_title",
+        "limit": 1
+      },
+      {
+        "name": "Price",
+        "type": "product_price",
+        "limit": 1
+      },
+      {
+        "name": "Variant",
+        "type": "product_variant",
+        "limit": 1
+      }, {
+        "name": "Quantity",
+        "type": "product_quantity",
+        "limit": 1
+      }, {
+        "name": "Cart button",
+        "type": "product_cart_button",
+        "limit": 1
+      }
+    ]
+  }
+{% endschema %}
