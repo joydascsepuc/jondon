@@ -1,0 +1,24 @@
+<div class="container">
+  {% paginate blog.articles by 5 %}
+
+    <h5>{{ blog.title }}</h5>
+    {% for article in blog.articles %}
+      <div>
+        <h2>
+          <a href="{{ article.url }}">{{ article.title }}</a>
+        </h2>
+        {{ article.author }} @ {{ article.created_at }}
+        <div>
+          {% if article.excerpt.size > 0 %}
+            {{ article.excerpt }}
+          {% else %}
+            <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+
+    {% render 'pagination', pagination: paginate %}
+
+  {% endpaginate %}
+</div>
