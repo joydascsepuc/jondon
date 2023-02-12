@@ -1,0 +1,32 @@
+<style>
+  .search-item {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<a class="container search-item bg-white overflow-hidden" href="{{ product.url }}">
+  <div>
+    <a href="{{ product.url }}">
+      {% if product.featured_image %}
+        <div class="h-100 overflow-hidden">
+          <img
+            class="img-fluid"
+            src="{{ product.featured_image | img_url: 'small' }}"
+            alt="{{ product.featured_image.alt }}">
+        </div>
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
+      {% endif %}
+    </a>
+  </div>
+  <div>
+    <span class="text-sm">{{ product.vendor }}</span>
+  </div>
+  <div>
+    <a href="{{ product.url }}" class="">{{ product.title }}</a>
+  </div>
+  <div>
+    <p class="">{{ product.price | money }}</p>
+  </div>
+</a>
