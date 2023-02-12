@@ -51,13 +51,15 @@
               aria-label="Search"
               name="q"
               value="{{ search.terms | escape }}">
-            <button class="btn btn-success" type="submit">Search</button>
+            <button class="btn" type="submit">
+              {% render 'icon-search' %}
+            </button>
           </form>
           <a
             href="{{ routes.cart_url }}"
             class="btn"
             style="color: gray;">
-            cart
+            {% render 'icon-shopping-bag' %}
           </a>
 
           {% if shop.customer_accounts_enabled %}

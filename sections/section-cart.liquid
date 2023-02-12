@@ -32,7 +32,7 @@
                   <a class="m-2" href="{{ item.url }}">{{ item.product.title }}</a>
                   <div class="m-2">{{ item.variant.title }}</div>
                   <a class="m-2" href="{{ item.url_to_remove }}">
-                    remove
+                    {% render 'icon-delete' %}
                   </a>
                 </div>
               </td>
