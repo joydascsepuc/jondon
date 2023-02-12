@@ -1,0 +1,87 @@
+<style>
+  .registration-div,
+  .forgot-password-div {
+    border: 1px solid black;
+    padding: 20px 30px;
+  }
+
+  .form-control {
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .form-control:focus {
+    border: 1px solid black;
+    border-radius: 0;
+  }
+
+  .submit-buttons {
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: none;
+  }
+</style>
+
+<div class="container">
+  <div class="mt-5 pt-5">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="registration-div">
+          <h5 class="fw-bold text-center mb-3">Registration</h5>
+          {% form 'create_customer' %}
+            {{ form.errors | default_errors }}
+
+            <div class="first-name form-group">
+              <label for="first-name" class="form-label">First name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="customer[first_name]">
+            </div>
+
+            <div class="last-name form-group mt-2">
+              <label for="last-name" class="form-label">Last name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="customer[last_name]">
+            </div>
+
+            <div class="email form-group mt-2">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="customer[email]">
+            </div>
+
+            <div class="password form-group mt-2">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="customer[password]">
+            </div>
+
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <div class="submit d-grid mt-4">
+                  <input
+                    type="submit"
+                    class="btn submit-buttons"
+                    value="Sign in">
+                </div>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+</div>
