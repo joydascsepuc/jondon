@@ -1,0 +1,26 @@
+<tr>
+  <th scope="col">
+    <p class="">{{ order.name | link_to: order.customer_url }}</p>
+  </th>
+  <th scope="col">
+    {% if order.line_items.first.image %}
+      <div class="h-100 overflow-hidden">
+        <img
+          class="img-fluid"
+          src="{{ order.line_items.first.image | img_url: 'small' }}"
+          alt="{{ order.line_items.first.image.alt }}">
+      </div>
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover bg-gray-100' }}
+    {% endif %}
+  </th>
+  <th scope="col">
+    <span class="text-sm">{{ order.financial_status_label }}</span>
+  </th>
+  <th scope="col">
+    <a href="{{ product.url }}" class="">{{ order.fullfillment_status_label }}</a>
+  </th>
+  <th scope="col">
+    <p class="">{{ order.total_price | money }}</p>
+  </th>
+</tr>
