@@ -1,0 +1,9 @@
+{
+    "name": "Customer login page",
+    "sections": {
+        "template": {
+            "type": "section-login"
+        }
+    },
+    "order": ["template"]
+}
