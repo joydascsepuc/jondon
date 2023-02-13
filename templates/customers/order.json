@@ -1,0 +1,9 @@
+{
+    "name": "Order details",
+    "sections": {
+        "template": {
+            "type": "section-order"
+        }
+    },
+    "order": ["template"]
+}

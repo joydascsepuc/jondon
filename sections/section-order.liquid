@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h5 class="fw-bold">#{{ order.order_number }}</h5>
+      <p style="color: gray;">Placed on {{ order.created_at | date: format: 'date' }}</p>
+      <p style="color: gray;">{{ order.financial_status_label }}</p>
+    </div>
+    <div class="col-md-6">
+      <a href="{{ routes.account_url }}">Back to account</a>
+    </div>
+  </div>
+
+  {% for line_item in order.line_items %}
+    <div class="row">
+      <div class="col md-4">
+        {% if line_item.image %}
+          <img
+            src="{{ line_item.image | img_url: 'small' }}"
+            class="img-fluid"
+            alt="{{ line_item.image.alt }}">
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'img-fluid' }}
+        {% endif %}
+
+        <h5>Fullfillment</h5>
+        {% if line_item.successfully_fulfilled_quantity > 0 %}
+          <p>We have fullfilled {{ line_item.successfully_fulfilled_quantity }} items of your order</p>
+          <p>Tracking company: {{ line_item.fulfillment.tracking_company }}</p>
+          <p>Tracking number: {{ line_item.fulfillment.tracking_number }}</p>
+
+          <a href="{{ line_item.fulfillment.tracking_url }}" target="_blank">Track order</a>
+        {% else %}
+          <p>This item is yet to fullfilled!</p>
+        {% endif %}
+      </div>
+      <div class="col md-4">
+        <h5>{{ line_item.title | link_to: line_item.product.url }}</h5>
+        <table class="table table-responsive">
+          <tbody class="table-body">
+            <tr>
+              <td>Price</td>
+              <td>{{ line_item.original_price | money }}</td>
+            </tr>
+            <tr>
+              <td>Quantity</td>
+              <td>{{ line_item.quantity }}</td>
+            </tr>
+            <tr>
+              <td>Final price</td>
+              <td>{{ line_item.final_line_price | money }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mt-2 text-gray">
+          {{ line_item.description | truncatewords: 15 }}
+        </div>
+      </div>
+      <div class="col md-4">
+        <h5>Delivery address</h5>
+        <div>
+          <p>Address 1: {{ order.shipping_address.address1 }}</p>
+          {% if order.shipping_address.address2 != blank %}
+            <p>Address 2: {{ order.shipping_address.address2 }}</p>
+          {% endif %}
+          <p>Street: {{ order.shipping_address.province }}</p>
+          <p>City: {{ order.shipping_address.city }}</p>
+          <p>Zip: {{ order.shipping_address.zip }}</p>
+          <p>Country: {{ order.shipping_address.country }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
